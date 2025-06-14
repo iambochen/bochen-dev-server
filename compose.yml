@@ -3,6 +3,9 @@ services:
     # Build the image from the Dockerfile in the current directory
     build: .
 
+    # Run the FastAPI application by default
+    command: fastapi dev --host 0.0.0.0 --port 8000 src/app/main.py
+
     # Host the FastAPI application on port 8000
     ports:
       - "8000:8000"
@@ -23,3 +26,17 @@ services:
         # Rebuild the image if dependencies change by checking uv.lock
         - action: rebuild
           path: ./uv.lock
+
+  worker:
+    build: .
+    command: celery -A worker.app worker --loglevel=INFO
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:8.0.2-alpine
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:

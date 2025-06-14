@@ -78,7 +78,7 @@ compose, which is a best-practice method for updating the container on local cha
 ### Application code
 
 The Python application code for the project is at
-[`src/uv_docker_example/__init__.py`](./src/uv_docker_example/__init__.py) — there's a command line
+[`src/app/main.py`](./src/app/main.py) — there's a command line
 entrypoint and a basic FastAPI application — both of which just display "hello world" output.
 
 ### Project definition
