@@ -1,10 +1,6 @@
-# uv-docker-example
+# bochen-dev-server
 
-An example project for using uv in Docker images, with a focus on best practices for developing with
-the project mounted in the local image.
-
-See the [uv Docker integration guide](https://docs.astral.sh/uv/guides/integration/docker/) for more
-background.
+bochen.dev server.
 
 ## Trying it out
 

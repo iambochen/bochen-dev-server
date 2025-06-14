@@ -25,46 +25,46 @@ jobs:
       - name: Build and export
         uses: docker/build-push-action@v6
         with:
-          tags: uv-docker-example:latest
-          cache-from: type=gha,scope=uv-docker-example
-          cache-to: type=gha,mode=min,scope=uv-docker-example
-          outputs: type=docker,dest=/tmp/uv-docker-example.tar
+          tags: bochen-dev-server:latest
+          cache-from: type=gha,scope=bochen-dev-server
+          cache-to: type=gha,mode=min,scope=bochen-dev-server
+          outputs: type=docker,dest=/tmp/bochen-dev-server.tar
 
       - name: Build and export (multistage)
         uses: docker/build-push-action@v6
         with:
           file: multistage.Dockerfile
-          tags: uv-docker-example-multistage:latest
-          cache-from: type=gha,scope=uv-docker-example-multistage
-          cache-to: type=gha,mode=min,scope=uv-docker-example-multistage
-          outputs: type=docker,dest=/tmp/uv-docker-example-multistage.tar
+          tags: bochen-dev-server-multistage:latest
+          cache-from: type=gha,scope=bochen-dev-server-multistage
+          cache-to: type=gha,mode=min,scope=bochen-dev-server-multistage
+          outputs: type=docker,dest=/tmp/bochen-dev-server-multistage.tar
 
       - name: Build and export (standalone)
         uses: docker/build-push-action@v6
         with:
           file: standalone.Dockerfile
-          tags: uv-docker-example-standalone:latest
-          cache-from: type=gha,scope=uv-docker-example-standalone
-          cache-to: type=gha,mode=min,scope=uv-docker-example-standalone
-          outputs: type=docker,dest=/tmp/uv-docker-example-standalone.tar
+          tags: bochen-dev-server-standalone:latest
+          cache-from: type=gha,scope=bochen-dev-server-standalone
+          cache-to: type=gha,mode=min,scope=bochen-dev-server-standalone
+          outputs: type=docker,dest=/tmp/bochen-dev-server-standalone.tar
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: uv-docker-example
-          path: /tmp/uv-docker-example.tar
+          name: bochen-dev-server
+          path: /tmp/bochen-dev-server.tar
 
       - name: Upload artifact (multistage)
         uses: actions/upload-artifact@v4
         with:
-          name: uv-docker-example-multistage
-          path: /tmp/uv-docker-example-multistage.tar
+          name: bochen-dev-server-multistage
+          path: /tmp/bochen-dev-server-multistage.tar
 
       - name: Upload artifact (standalone)
         uses: actions/upload-artifact@v4
         with:
-          name: uv-docker-example-standalone
-          path: /tmp/uv-docker-example-standalone.tar
+          name: bochen-dev-server-standalone
+          path: /tmp/bochen-dev-server-standalone.tar
 
   test:
     name: "test image"
@@ -76,26 +76,26 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: uv-docker-example
+          name: bochen-dev-server
           path: /tmp
 
       - name: Download artifact (multistage)
         uses: actions/download-artifact@v4
         with:
-          name: uv-docker-example-multistage
+          name: bochen-dev-server-multistage
           path: /tmp
 
       - name: Download artifact (standalone)
         uses: actions/download-artifact@v4
         with:
-          name: uv-docker-example-standalone
+          name: bochen-dev-server-standalone
           path: /tmp
   
       - name: Load images
         run: |
-          docker load --input /tmp/uv-docker-example.tar
-          docker load --input /tmp/uv-docker-example-multistage.tar
-          docker load --input /tmp/uv-docker-example-standalone.tar
+          docker load --input /tmp/bochen-dev-server.tar
+          docker load --input /tmp/bochen-dev-server-multistage.tar
+          docker load --input /tmp/bochen-dev-server-standalone.tar
           docker image ls -a
 
       - name: Test command line
@@ -107,7 +107,7 @@ jobs:
           docker compose down
 
       - name: Test command line (multistage)
-        run: docker run uv-docker-example-multistage:latest hello
+        run: docker run bochen-dev-server-multistage:latest hello
 
       - name: Test command line (standalone)
-        run: docker run uv-docker-example-standalone:latest hello
+        run: docker run bochen-dev-server-standalone:latest hello
